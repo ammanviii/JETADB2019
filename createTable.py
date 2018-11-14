@@ -1,11 +1,5 @@
 #!/usr/bin/python
 
-# [postgresql]
-# host=ammandb.postgres.database.azure.com
-# database=JetaStore
-# user=myadmin@ammandb
-# password=forDB2019
-
 import psycopg2
 from config import config
  
@@ -14,10 +8,7 @@ def create_tables():
     """ create tables in the PostgreSQL database"""
     commands = (
         """
-        CREATE TABLE Employees (
-            e_id SERIAL PRIMARY KEY,
-            Fname VARCHAR(255) NOT NULL,
-            Lname VARCHAR(255) NOT NULL
+        CREATE TABLE COMMAND
         )
         """,)
     conn = None
