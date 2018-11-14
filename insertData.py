@@ -13,8 +13,8 @@ states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI'
 
 def insert_employee(Fname, Lname):
     """ insert a new vendor into the vendors table """
-    sql = """INSERT INTO employees(Fname, Lname)
-             VALUES(%s, %s) RETURNING e_id;"""
+    sql = """INSERT INTO employees(FName, LName)
+             VALUES(%s, %s) RETURNING EmployeeId;"""
     conn = None
     eid = None
     try:
