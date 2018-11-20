@@ -11,7 +11,7 @@ def create_tables():
                 CategoryName VARCHAR(255) NOT NULL
             )
         """,
-        """ CREATE TABLE Carrier (
+        """ CREATE TABLE Carriers (
                 CarrierId SERIAL PRIMARY KEY,
                 CarrierName VARCHAR(255) NOT NULL
             )
@@ -48,7 +48,9 @@ def create_tables():
                 CustomerId INT NOT NULL,
                 OrderDate DATE NOT NULL,
                 TrackingNo INT NOT NULL,
-                FOREIGN KEY (CustomerId) REFERENCES Customers(CustomerId)
+                CarrierId INT NOT NULL,
+                FOREIGN KEY (CustomerId) REFERENCES Customers(CustomerId),
+                FOREIGN KEY (CarrierId) REFERENCES Carriers(CarrierId)
             )
         """,
          """ CREATE TABLE Suppliers (

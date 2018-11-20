@@ -4,7 +4,7 @@ CREATE TABLE Categories
   CategoryName VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Carrier
+CREATE TABLE Carriers
 (
   CarrierId SERIAL PRIMARY KEY,
   CarrierName VARCHAR(255) NOT NULL
@@ -47,7 +47,9 @@ CREATE TABLE Orders
   CustomerId INT NOT NULL,
   OrderDate DATE NOT NULL,
   TrackingNo INT NOT NULL,
-  FOREIGN KEY (CustomerId) REFERENCES Customers(CustomerId)
+  CarrierId INT NOT NULL,
+  FOREIGN KEY (CustomerId) REFERENCES Customers(CustomerId),
+  FOREIGN KEY (CarrierId) REFERENCES Carriers(CarrierId)
 );
 
 CREATE TABLE Suppliers
