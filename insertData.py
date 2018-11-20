@@ -100,7 +100,7 @@ if __name__ == '__main__':
         first_employee = random.choice(employees_first_names)
         last_employee = random.choice(employees_last_names)
 
-        insert_employee(first_employee, first_employee)
+        # insert_employee(first_employee, first_employee)
         print(f'{first_employee} {last_employee}\n')
         print(" ")
 
@@ -124,6 +124,6 @@ if __name__ == '__main__':
         zip_string = f'{random.randint(10000, 99999)}'
         address = f'{street_num} {street} St.,'
         
-        insert_customers(first_customer, last_customer, phone_string, email, address, city, state, zip_string)
+        # insert_customers(first_customer, last_customer, phone_string, email, address, city, state, zip_string)
         print(f'{first_customer}\n{last_customer}\n{phone_string}\n{email}\n{address}\n{city}\n{state}\n{zip_string}\n')
         print(" ")
