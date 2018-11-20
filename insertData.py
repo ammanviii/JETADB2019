@@ -94,7 +94,7 @@ def insert_customers(Fname, Lname, Phone, Email, Address, City, State, Zip):
 if __name__ == '__main__':
     
     #generates 100 fake employees
-    # UNCOMMENT TO INSERT
+    # UNCOMMENT TO INSERT AND CHANGE range to range(100)
     for x in range(1):
     
         first_employee = random.choice(employees_first_names)
@@ -102,11 +102,12 @@ if __name__ == '__main__':
 
         # insert_employee(first_employee, first_employee)
         print(f'{first_employee} {last_employee}\n')
+        print(" ")
 
 
 
     #generates 100 fake customers
-    # UNCOMMENT TO INSERT
+    # UNCOMMENT TO INSERT AND CHANGE range to range(100)
     for x in range(1):
         first_customer = random.choice(customers_first_names)
         last_customer = random.choice(customers_last_names)
