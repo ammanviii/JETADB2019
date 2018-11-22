@@ -153,12 +153,44 @@ def insert_orders(cid, orderDate, trackingNo, carrierid):
  
     return oid
 
+def fill_carrierslist(carrierList):
+    """ insert multiple carriers into the carriers table  """
+    sql = "INSERT INTO Carriers(carrierName) VALUES(%s)"
+    conn = None
+    try:
+        # read database configuration
+        params = config()
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(**params)
+        # create a new cursor
+        cur = conn.cursor()
+        # execute the INSERT statement
+        cur.executemany(sql,carrierList)
+        # commit the changes to the database
+        conn.commit()
+        # close communication with the database
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+   
+
 
 if __name__ == '__main__':
     
+    fill_carrierslist([
+        ('USPS',),
+        ('UPS',),
+        ('Fedex',),
+        ('DHL',),
+      ])
+
+    
     #generates 100 fake employees
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
-    for x in range(100):
+    for x in range(0):
     
         first_employee = random.choice(employees_first_names)
         last_employee = random.choice(employees_last_names)
@@ -171,7 +203,7 @@ if __name__ == '__main__':
 
     #generates 100 fake customers
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
-    for x in range(100):
+    for x in range(0):
         first_customer = random.choice(customers_first_names)
         last_customer = random.choice(customers_last_names)
 
@@ -193,7 +225,7 @@ if __name__ == '__main__':
     
     
     ##generates fake supportTickets
-    for x in range(200):
+    for x in range(1):
         cid = random.randint(1,100)
         oid = random.randint(1,100)
         eid = random.randint(1,100)
@@ -211,7 +243,7 @@ if __name__ == '__main__':
         # insert_tickets(cid,supportMessage,oid,eid,ticketdate)
         print(ticketdate)
     ##generates fake Orders:
-    for x in range(82):
+    for x in range(0):
         cid = random.randint(1,100)
         yr = random.randint(2016,2018)
         if mo==2:
