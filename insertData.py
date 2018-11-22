@@ -193,26 +193,36 @@ if __name__ == '__main__':
     
     
     ##generates fake supportTickets
-    for x in range(20):
+    for x in range(200):
         cid = random.randint(1,100)
         oid = random.randint(1,100)
         eid = random.randint(1,100)
         yr = random.randint(2016,2018)
         mo = random.randint(1,12)
-        day = random.randint(1,28)
+        if mo==2:
+            day = random.randint(1,28)
+        elif mo==4 or mo==6 or mo==9 or mo==11:
+            day = random.randint(1,30)
+        else:
+            day = random.randint(1,31)
         ticketdate = f'{str(yr)}-{str(mo)}-{str(day)}'
         supportMessage = f'I have {random.choice(ticketBank1)} about {random.choice(ticketBank2)}'
         # print(supportMessage)
-        insert_tickets(cid,supportMessage,oid,eid,ticketdate)
-
+        # insert_tickets(cid,supportMessage,oid,eid,ticketdate)
+        print(ticketdate)
     ##generates fake Orders:
     for x in range(82):
         cid = random.randint(1,100)
         yr = random.randint(2016,2018)
-        mo = random.randint(1,12)
-        day = random.randint(1,28)
+        if mo==2:
+            day = random.randint(1,28)
+        elif mo==4 or mo==6 or mo==9 or mo==11:
+            day = random.randint(1,30)
+        else:
+            day = random.randint(1,31)
         orderDate = f'{str(yr)}-{str(mo)}-{str(day)}'
         carrierid = random.randint(0,3)
         trackingNo = random.randint(10000000,99999999)
         # insert_orders(cid,orderDate,trackingNo, carrierid)
+        
         
