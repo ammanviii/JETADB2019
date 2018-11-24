@@ -263,37 +263,6 @@ def insert_suppliers(SupplierName):
     return SupplierID
 
 
-def insert_orders(cid, orderDate, trackingNo, carrierid):
-    
-    sql = """INSERT INTO Orders(CustomerId, OrderDate , TrackingNo, CarrierId)
-            VALUES(%s, %s, %s, %s) RETURNING OrderId;"""
-    conn = None
-    oid = None
-    try:
-        # read database configuration
-        params = config()
-        # connect to the PostgreSQL database
-        conn = psycopg2.connect(**params)
-        # create a new cursor
-        cur = conn.cursor()
-        # execute the INSERT statement
-        cur.execute(sql, (cid, orderDate, trackingNo, carrierid))
-        # get the generated id back
-        oid = cur.fetchone()[0]
-        print("The OrderId is: "+f'{oid}')
-        print(" ")
-        # commit the changes to the database
-        conn.commit()
-        # close communication with the database
-        cur.close()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-    finally:
-        if conn is not None:
-            conn.close()
- 
-    return oid
-
 def fill_carrierslist(carrierList):
     """ insert multiple carriers into the carriers table  """
     sql = "INSERT INTO Carriers(carrierName) VALUES(%s)"
