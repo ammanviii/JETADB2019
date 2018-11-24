@@ -264,7 +264,7 @@ def insert_suppliers(SupplierName):
  
     return SupplierID
 
-def insert_clothingproducts(ProductName,price,inventory,categoryId,supplierid):
+def insert_products(ProductName,price,inventory,categoryId,supplierid):
 
     
 
@@ -504,4 +504,4 @@ if __name__ == '__main__':
         price = random.randint(10,40)
         inventory = random.randint(1,99)
         clothingsupplier = random.randint(0,99)
-        insert_clothingproducts(clothingname,price,inventory,3, clothingsupplier)
+        insert_products(clothingname,price,inventory,3, clothingsupplier)
