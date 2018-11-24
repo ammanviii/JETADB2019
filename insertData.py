@@ -318,6 +318,28 @@ def fill_carrierslist(carrierList):
             conn.close()
    
 
+def fill_categorieslist(categoryList):
+    """ insert multiple categories into the category table  """
+    sql = "INSERT INTO Categories(CategoryName) VALUES(%s)"
+    conn = None
+    try:
+        # read database configuration
+        params = config()
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(**params)
+        # create a new cursor
+        cur = conn.cursor()
+        # execute the INSERT statement
+        cur.executemany(sql,categoryList)
+        # commit the changes to the database
+        conn.commit()
+        # close communication with the database
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
 
 if __name__ == '__main__':
     
@@ -328,18 +350,26 @@ if __name__ == '__main__':
         ('DHL',),
       ])
 
-    
+    fill_categorieslist([
+        ('Books',),
+        ('Music',),
+        ('Electronics',),
+        ('Clothing',),
+        ('Pet',),
+        ('Holiday',),
+        ('Sales',),
+       ])
+
+
     #generates 100 fake employees
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
 
     print("The Employees are:","\n")
-    for x in range(1):
-
+    for x in range(100):
     
         first_employee = random.choice(employees_first_names)
         last_employee = random.choice(employees_last_names)
-
-        # insert_employee(first_employee, first_employee)
+        #insert_employee(first_employee, first_employee)
         # print(f'{first_employee} {last_employee}\n')
         # print("#"*50)
         # print(" ")
@@ -349,7 +379,7 @@ if __name__ == '__main__':
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
 
     print("The Customers are:","\n")
-    for x in range(1):
+    for x in range(100):
 
         first_customer = random.choice(customers_first_names)
         last_customer = random.choice(customers_last_names)
@@ -366,15 +396,15 @@ if __name__ == '__main__':
         zip_string = f'{random.randint(10000, 99999)}'
         address = f'{street_num} {street} St.'
         
-        # insert_customers(first_customer, last_customer, phone_string, email, address, city, state, zip_string)
-        # print(f'{first_customer}\n{last_customer}\n{phone_string}\n{email}\n{address}\n{city}\n{state}\n{zip_string}\n')
+        #insert_customers(first_customer, last_customer, phone_string, email, address, city, state, zip_string)
+        print(f'{first_customer}\n{last_customer}\n{phone_string}\n{email}\n{address}\n{city}\n{state}\n{zip_string}\n')
 
         # print("#"*50)
         # print(" ")
 
      ##generates fake Orders:
     print("The Orders are","\n")
-    for x in range(1):
+    for x in range(100):
         cid = random.randint(1,100)
         yr = random.randint(2016,2018)
         mo = random.randint(1,12)
@@ -383,7 +413,7 @@ if __name__ == '__main__':
         carrierid = random.randint(1,4)
         trackingNo = random.randint(10000000,99999999)
 
-        # insert_orders(cid,orderDate,trackingNo, carrierid)
+        #insert_orders(cid,orderDate,trackingNo, carrierid)
         # print ("The order is: ", f'{cid} {yr} {mo} {day} {orderDate} {carrierid} {trackingNo}\n')
         # print("#"*50)
         # print(" ")
@@ -394,9 +424,8 @@ if __name__ == '__main__':
     print(" ")
     
     
-    ##generates fake supportTickets
-
-    for x in range(1):
+    ##generates fake supportTickets##
+    for x in range(100):
         cid = random.randint(1,100)
         oid = random.randint(1,100)
         eid = random.randint(1,100)
@@ -411,10 +440,10 @@ if __name__ == '__main__':
         ticketdate = f'{str(yr)}-{str(mo)}-{str(day)}'
         supportMessage = f'I have {random.choice(ticketBank1)} about {random.choice(ticketBank2)}'
         # print(supportMessage)
-        # insert_tickets(cid,supportMessage,oid,eid,ticketdate)
+        #insert_tickets(cid,supportMessage,oid,eid,ticketdate)
         print(ticketdate)
     ##generates fake Orders:
-    for x in range(0):
+    for x in range(100):
         cid = random.randint(1,100)
         yr = random.randint(2016,2018)
         if mo==2:
@@ -426,7 +455,7 @@ if __name__ == '__main__':
         orderDate = f'{str(yr)}-{str(mo)}-{str(day)}'
         carrierid = random.randint(0,3)
         trackingNo = random.randint(10000000,99999999)
-        # insert_orders(cid,orderDate,trackingNo, carrierid)
+        insert_orders(cid,orderDate,trackingNo, carrierid)
 
 
     
@@ -436,12 +465,12 @@ if __name__ == '__main__':
     print(accounts_cid, "\n")
     print("The Accounts are:\n")
 
-    for x in range(1): 
+    for x in range(100): 
         cid = accounts_cid[x]
         email = customer_id_email.get(cid)
         password = random.choice(fake_Passwords) 
 
-        # insert_accounts(email,password,cid)
+        insert_accounts(email,password,cid)
         # print(f'{cid} {password} {email}\n')
         # print("#"*50)
         # print(" ")
@@ -454,7 +483,8 @@ if __name__ == '__main__':
         randomCompanies = random.sample(fake_companies, k=100)
         suppliers = random.choice(randomCompanies)
 
-        # insert_suppliers(suppliers)
+
+        #insert_suppliers(suppliers)
         print(f'{suppliers}\n')
         print("#"*50)
         print(" ")
