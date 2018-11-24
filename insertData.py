@@ -22,11 +22,13 @@ fake_Passwords=[]
 customer_id_email={}
 
 fake_companies=[]
+fake_books=[]
 
 filename1='firstNames.txt'
 filename2='lastNames.txt'
 filename3='fakePasswords.txt'
 filename4='fakeCompanies.txt'
+filename5='books.txt'
 
 with open (filename1) as fin:
     for line in fin:
@@ -44,6 +46,10 @@ with open (filename3) as fin:
 with open (filename4) as fin:
     for line in fin:
         fake_companies.append(line.strip())
+
+with open (filename5) as fin:
+    for line in fin:
+        fake_books.append(line.strip())
 
 
 
@@ -341,24 +347,54 @@ def fill_categorieslist(categoryList):
         if conn is not None:
             conn.close()
 
+def insert_products(ProductName,price,inventory,categoryId,supplierid):
+    sql = """INSERT INTO Products(ProductName, price , inventory, categoryId, supplierId)
+            VALUES(%s, %s, %s, %s, %s) RETURNING ProductId;"""
+    conn = None
+    ProductId = None
+    try:
+        # read database configuration
+        params = config()
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(**params)
+        # create a new cursor
+        cur = conn.cursor()
+        # execute the INSERT statement
+        cur.execute(sql, (ProductName,price, inventory, categoryId,supplierid))
+        # get the generated id back
+        ProductId = cur.fetchone()[0]
+        print("The ProductId is: "+f'{ProductId}')
+        print(" ")
+        # commit the changes to the database
+        conn.commit()
+        # close communication with the database
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return ProductId
+
+
+
+
 if __name__ == '__main__':
     
-    fill_carrierslist([
-        ('USPS',),
-        ('UPS',),
-        ('Fedex',),
-        ('DHL',),
-      ])
+    #fill_carrierslist([
+     #   ('USPS',),
+      #  ('UPS',),
+       # ('Fedex',),
+        #('DHL',),
+      #])
 
-    fill_categorieslist([
-        ('Books',),
-        ('Music',),
-        ('Electronics',),
-        ('Clothing',),
-        ('Pet',),
-        ('Holiday',),
-        ('Sales',),
-       ])
+    #fill_categorieslist([
+     #   ('Books',),
+      #  ('Music',),
+       # ('Electronics',),
+        #('Clothing',),
+        #('Pet',),
+       #])
 
 
     #generates 100 fake employees
@@ -369,7 +405,7 @@ if __name__ == '__main__':
     
         first_employee = random.choice(employees_first_names)
         last_employee = random.choice(employees_last_names)
-        #insert_employee(first_employee, first_employee)
+       # insert_employee(first_employee, first_employee)
         # print(f'{first_employee} {last_employee}\n')
         # print("#"*50)
         # print(" ")
@@ -404,7 +440,7 @@ if __name__ == '__main__':
 
      ##generates fake Orders:
     print("The Orders are","\n")
-    for x in range(100):
+    for x in range(0):
         cid = random.randint(1,100)
         yr = random.randint(2016,2018)
         mo = random.randint(1,12)
@@ -442,22 +478,7 @@ if __name__ == '__main__':
         # print(supportMessage)
         #insert_tickets(cid,supportMessage,oid,eid,ticketdate)
         print(ticketdate)
-    ##generates fake Orders:
-    for x in range(100):
-        cid = random.randint(1,100)
-        yr = random.randint(2016,2018)
-        if mo==2:
-            day = random.randint(1,28)
-        elif mo==4 or mo==6 or mo==9 or mo==11:
-            day = random.randint(1,30)
-        else:
-            day = random.randint(1,31)
-        orderDate = f'{str(yr)}-{str(mo)}-{str(day)}'
-        carrierid = random.randint(0,3)
-        trackingNo = random.randint(10000000,99999999)
-        insert_orders(cid,orderDate,trackingNo, carrierid)
-
-
+    
     
     ##generates fake accounts:
     #We run get_email() so we can get the emails
@@ -470,7 +491,7 @@ if __name__ == '__main__':
         email = customer_id_email.get(cid)
         password = random.choice(fake_Passwords) 
 
-        insert_accounts(email,password,cid)
+       # insert_accounts(email,password,cid)
         # print(f'{cid} {password} {email}\n')
         # print("#"*50)
         # print(" ")
@@ -488,3 +509,18 @@ if __name__ == '__main__':
         print(f'{suppliers}\n')
         print("#"*50)
         print(" ")
+
+
+
+ #generates 20 fake books
+    # UNCOMMENT TO INSERT AND CHANGE range to range(100)
+    print("The Books are:","\n")
+    for x in range(20):
+        randomBooks = random.sample(fake_books, k=20)
+        books = random.choice(randomBooks)
+
+        price = random.randint(5,20)
+        inventory = random.randint(1,99)
+        bookSupplier = random.randint(0,99)
+
+        insert_products(books,price,inventory,1,bookSupplier)
