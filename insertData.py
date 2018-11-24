@@ -9,6 +9,8 @@ fake_cities = ['Metropolis', 'Eerie', "King's Landing", 'Sunnydale', 'Bedrock', 
 states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
 ticketBank1 = ['a question' , 'a problem' , 'an issue' , 'a complaint' ,'a request' ] 
 ticketBank2 = ['a product' , 'my shipment' , 'my package' , 'shipping' , 'price' , 'an error'  ]
+clothingcolor = ['red' , 'blue' , 'brown' , 'black', 'white', 'denim', 'leather', 'gray']
+clothingitem = ['pants' , 'hat' , 'shirt' , 'jacket' , 'shoes']
 
 
 customers_first_names=[]
@@ -262,6 +264,39 @@ def insert_suppliers(SupplierName):
  
     return SupplierID
 
+def insert_clothingproducts(ProductName,price,inventory,categoryId,supplierid):
+
+    
+
+    sql = """INSERT INTO Products(ProductName, price , inventory, categoryId, supplierId)
+            VALUES(%s, %s, %s, %s, %s) RETURNING ProductId;"""
+    conn = None
+    ProductId = None
+    try:
+        # read database configuration
+        params = config()
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(**params)
+        # create a new cursor
+        cur = conn.cursor()
+        # execute the INSERT statement
+        cur.execute(sql, (ProductName,price, inventory, categoryId,supplierid))
+        # get the generated id back
+        ProductId = cur.fetchone()[0]
+        print("The ProductId is: "+f'{ProductId}')
+        print(" ")
+        # commit the changes to the database
+        conn.commit()
+        # close communication with the database
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+ 
+    return ProductId
+
 
 def fill_carrierslist(carrierList):
     """ insert multiple carriers into the carriers table  """
@@ -285,7 +320,9 @@ def fill_carrierslist(carrierList):
     finally:
         if conn is not None:
             conn.close()
-   
+
+
+
 
 def fill_categorieslist(categoryList):
     """ insert multiple categories into the category table  """
@@ -310,24 +347,26 @@ def fill_categorieslist(categoryList):
         if conn is not None:
             conn.close()
 
+
+
 if __name__ == '__main__':
     
-    fill_carrierslist([
-        ('USPS',),
-        ('UPS',),
-        ('Fedex',),
-        ('DHL',),
-      ])
+    # fill_carrierslist([
+    #     ('USPS',),
+    #     ('UPS',),
+    #     ('Fedex',),
+    #     ('DHL',),
+    #   ])
 
-    fill_categorieslist([
-        ('Books',),
-        ('Music',),
-        ('Electronics',),
-        ('Clothing',),
-        ('Pet',),
-        ('Holiday',),
-        ('Sales',),
-       ])
+    # fill_categorieslist([
+    #     ('Books',),
+    #     ('Music',),
+    #     ('Electronics',),
+    #     ('Clothing',),
+    #     ('Pet',),
+    #     ('Holiday',),
+    #     ('Sales',),
+    #    ])
 
 
     #generates 100 fake employees
@@ -373,7 +412,7 @@ if __name__ == '__main__':
 
      ##generates fake Orders:
     print("The Orders are","\n")
-    for x in range(100):
+    for x in range(0):
         cid = random.randint(1,100)
         yr = random.randint(2016,2018)
         mo = random.randint(1,12)
@@ -394,7 +433,7 @@ if __name__ == '__main__':
     
     
     ##generates fake supportTickets##
-    for x in range(100):
+    for x in range(0):
         cid = random.randint(1,100)
         oid = random.randint(1,100)
         eid = random.randint(1,100)
@@ -412,7 +451,7 @@ if __name__ == '__main__':
         #insert_tickets(cid,supportMessage,oid,eid,ticketdate)
         print(ticketdate)
     ##generates fake Orders:
-    for x in range(100):
+    for x in range(0):
         cid = random.randint(1,100)
         yr = random.randint(2016,2018)
         if mo==2:
@@ -434,7 +473,7 @@ if __name__ == '__main__':
     print(accounts_cid, "\n")
     print("The Accounts are:\n")
 
-    for x in range(100): 
+    for x in range(0): 
         cid = accounts_cid[x]
         email = customer_id_email.get(cid)
         password = random.choice(fake_Passwords) 
@@ -448,7 +487,7 @@ if __name__ == '__main__':
      #generates 100 fake companies
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
     print("The Companies are:","\n")
-    for x in range(100):
+    for x in range(0):
         randomCompanies = random.sample(fake_companies, k=100)
         suppliers = random.choice(randomCompanies)
 
@@ -457,3 +496,12 @@ if __name__ == '__main__':
         print(f'{suppliers}\n')
         print("#"*50)
         print(" ")
+    
+    # inserts clothing item
+    for x in range (2):
+        clothingname = f'{random.choice(clothingcolor)} {random.choice(clothingitem)}'
+        print(clothingname)
+        price = random.randint(10,40)
+        inventory = random.randint(1,99)
+        clothingsupplier = random.randint(0,99)
+        insert_clothingproducts(clothingname,price,inventory,3, clothingsupplier)
