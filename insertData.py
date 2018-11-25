@@ -10,6 +10,12 @@ states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI'
 ticketBank1 = ['a question' , 'a problem' , 'an issue' , 'a complaint' ,'a request' ] 
 ticketBank2 = ['a product' , 'my shipment' , 'my package' , 'shipping' , 'price' , 'an error'  ]
 
+clothingcolor = ['red' , 'blue' , 'brown' , 'black', 'white', 'denim', 'leather', 'gray']
+clothingitem = ['pants' , 'hat' , 'shirt' , 'jacket' , 'shoes']
+pettype = ['cat' , 'dog' ,'bird' ,'hampster']
+petitem = ['food' , 'treat' , 'toy' , 'bed' , 'cleaning product', 'medicine' , 'crate' ]
+
+
 
 customers_first_names=[]
 customers_last_names=[]
@@ -24,13 +30,17 @@ customer_id_email={}
 fake_companies=[]
 fake_books=[]
 fake_albums=[]
+fake_electronics=[]
+randomElectronics = random.sample(fake_electronics, k=33)
+
 
 filename1='firstNames.txt'
 filename2='lastNames.txt'
 filename3='fakePasswords.txt'
 filename4='fakeCompanies.txt'
-filename5='books.txt'
-filename6='music.txt'
+filename5='fakeElectronics.txt'
+filename6='books.txt'
+filename7='music.txt'
 
 with open (filename1) as fin:
     for line in fin:
@@ -51,9 +61,13 @@ with open (filename4) as fin:
 
 with open (filename5) as fin:
     for line in fin:
+        fake_electronics.append(line.strip())        
+        
+with open (filename6) as fin:
+    for line in fin:
         fake_books.append(line.strip())
 
-with open (filename6) as fin:
+with open (filename7) as fin:
     for line in fin:
         fake_albums.append(line.strip())
 
@@ -544,3 +558,34 @@ if __name__ == '__main__':
         albumSupplier = random.randint(0,99)
 
         insert_products(albums,price,inventory,2,albumSupplier)
+        
+        
+            #inserts clothing item
+    for x in range (0):
+        clothingname = f'{random.choice(clothingcolor)} {random.choice(clothingitem)}'
+        print(clothingname)
+        price = random.randint(10,40)
+        inventory = random.randint(1,20)
+        supplier = random.randint(1,100)
+        insert_products(clothingname,price,inventory,4,supplier)
+
+    for x in range (5):
+        petname = f'{random.choice(pettype)} {random.choice(petitem)}'
+        price = random.randint(1,50)
+        inventory = random.randint(1,20)
+        supplier= random.randint(1,100)
+        insert_products(petname,price,inventory,5,supplier)
+    #  # inserts electronics item, set categoryID as 3
+    print(randomElectronics,"\n")
+    
+    for x in range (0):
+        electronicsName = randomElectronics[x]
+        price = random.randint(100,2000)
+        inventory = random.randint(1,99)
+        SupplierID = random.randint(0,99)
+        insert_products(electronicsName,price,inventory,3,SupplierID)
+        print(x,"\n")
+        print(f'{electronicsName} {price} {inventory} {SupplierID}\n')
+        print("#"*50)
+        print(" ")
+        
