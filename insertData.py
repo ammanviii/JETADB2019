@@ -9,7 +9,10 @@ fake_cities = ['Metropolis', 'Eerie', "King's Landing", 'Sunnydale', 'Bedrock', 
 states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
 ticketBank1 = ['a question' , 'a problem' , 'an issue' , 'a complaint' ,'a request' ] 
 ticketBank2 = ['a product' , 'my shipment' , 'my package' , 'shipping' , 'price' , 'an error'  ]
-
+clothingcolor = ['red' , 'blue' , 'brown' , 'black', 'white', 'denim', 'leather', 'gray']
+clothingitem = ['pants' , 'hat' , 'shirt' , 'jacket' , 'shoes']
+pettype = ['cat' , 'dog' ,'bird' ,'hampster']
+petitem = ['food' , 'treat' , 'toy' , 'bed' , 'cleaning product', 'medicine' , 'crate' ]
 
 customers_first_names=[]
 customers_last_names=[]
@@ -273,9 +276,8 @@ def insert_suppliers(SupplierName):
 
 def insert_products(ProductName,price,inventory,categoryId,supplierid):
 
-    
-
     sql = """INSERT INTO Products(ProductName, price , inventory, categoryId, supplierId)
+
             VALUES(%s, %s, %s, %s, %s) RETURNING ProductId;"""
     conn = None
     ProductId = None
@@ -304,6 +306,7 @@ def insert_products(ProductName,price,inventory,categoryId,supplierid):
  
     return ProductId
 
+
 def fill_carrierslist(carrierList):
     """ insert multiple carriers into the carriers table  """
     sql = "INSERT INTO Carriers(carrierName) VALUES(%s)"
@@ -326,7 +329,9 @@ def fill_carrierslist(carrierList):
     finally:
         if conn is not None:
             conn.close()
-   
+
+
+
 
 def fill_categorieslist(categoryList):
     """ insert multiple categories into the category table  """
@@ -351,6 +356,8 @@ def fill_categorieslist(categoryList):
         if conn is not None:
             conn.close()
 
+
+
 if __name__ == '__main__':
     
     # fill_carrierslist([
@@ -366,9 +373,7 @@ if __name__ == '__main__':
     #     ('Electronics',),
     #     ('Clothing',),
     #     ('Pet',),
-    #     ('Holiday',),
-    #     ('Sales',),
-    #    ])
+    #     ])
 
 
     #generates 100 fake employees
@@ -414,7 +419,7 @@ if __name__ == '__main__':
 
      ##generates fake Orders:
     print("The Orders are","\n")
-    for x in range(100):
+    for x in range(0):
         cid = random.randint(1,100)
         yr = random.randint(2016,2018)
         mo = random.randint(1,12)
@@ -427,7 +432,7 @@ if __name__ == '__main__':
         # print ("The order is: ", f'{cid} {yr} {mo} {day} {orderDate} {carrierid} {trackingNo}\n')
         # print("#"*50)
         # print(" ")
-
+ 
 
     ##generates fake tickets:
     print("The Tickets are:","\n")
@@ -435,7 +440,7 @@ if __name__ == '__main__':
     
     
     ##generates fake supportTickets##
-    for x in range(1):
+    for x in range(0):
         cid = random.randint(1,100)
         oid = random.randint(1,100)
         eid = random.randint(1,100)
@@ -453,7 +458,7 @@ if __name__ == '__main__':
         #insert_tickets(cid,supportMessage,oid,eid,ticketdate)
         print(ticketdate)
     ##generates fake Orders:
-    for x in range(1):
+    for x in range(0):
         cid = random.randint(1,100)
         yr = random.randint(2016,2018)
         if mo==2:
@@ -475,7 +480,7 @@ if __name__ == '__main__':
     print(accounts_cid, "\n")
     print("The Accounts are:\n")
 
-    for x in range(1): 
+    for x in range(0): 
         cid = accounts_cid[x]
         email = customer_id_email.get(cid)
         password = random.choice(fake_Passwords) 
@@ -489,26 +494,29 @@ if __name__ == '__main__':
      #generates 100 fake companies
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
     print("The Companies are:","\n")
-    for x in range(1):
+    for x in range(0):
         randomCompanies = random.sample(fake_companies, k=100)
         suppliers = random.choice(randomCompanies)
 
 
-        #insert_suppliers(suppliers)
+        insert_suppliers(suppliers)
         print(f'{suppliers}\n')
         print("#"*50)
         print(" ")
     
+    #inserts clothing item
+    for x in range (0):
+        clothingname = f'{random.choice(clothingcolor)} {random.choice(clothingitem)}'
+        print(clothingname)
+        price = random.randint(10,40)
+        inventory = random.randint(1,20)
+        supplier = random.randint(1,100)
+        insert_products(clothingname,price,inventory,4,supplier)
 
-    #  # inserts electronics item, set categoryID as 3
-    print(randomElectronics,"\n")
-    for x in range (33):
-        electronicsName = randomElectronics[x]
-        price = random.randint(100,2000)
-        inventory = random.randint(1,99)
-        SupplierID = random.randint(0,99)
-        insert_products(electronicsName,price,inventory,3,SupplierID)
-        print(x,"\n")
-        print(f'{electronicsName} {price} {inventory} {SupplierID}\n')
-        print("#"*50)
-        print(" ")
+    for x in range (5):
+        petname = f'{random.choice(pettype)} {random.choice(petitem)}'
+        price = random.randint(1,50)
+        inventory = random.randint(1,20)
+        supplier= random.randint(1,100)
+        insert_products(petname,price,inventory,5,supplier)
+    
