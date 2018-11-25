@@ -519,4 +519,16 @@ if __name__ == '__main__':
         inventory = random.randint(1,20)
         supplier= random.randint(1,100)
         insert_products(petname,price,inventory,5,supplier)
+    #  # inserts electronics item, set categoryID as 3
+    print(randomElectronics,"\n")
     
+    for x in range (0):
+        electronicsName = randomElectronics[x]
+        price = random.randint(100,2000)
+        inventory = random.randint(1,99)
+        SupplierID = random.randint(0,99)
+        insert_products(electronicsName,price,inventory,3,SupplierID)
+        print(x,"\n")
+        print(f'{electronicsName} {price} {inventory} {SupplierID}\n')
+        print("#"*50)
+        print(" ")
