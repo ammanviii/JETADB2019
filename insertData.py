@@ -11,7 +11,8 @@ ticketBank1 = ['a question' , 'a problem' , 'an issue' , 'a complaint' ,'a reque
 ticketBank2 = ['a product' , 'my shipment' , 'my package' , 'shipping' , 'price' , 'an error'  ]
 clothingcolor = ['red' , 'blue' , 'brown' , 'black', 'white', 'denim', 'leather', 'gray']
 clothingitem = ['pants' , 'hat' , 'shirt' , 'jacket' , 'shoes']
-
+pettype = ['cat' , 'dog' ,'bird' ,'hampster']
+petitem = ['food' , 'treat' , 'toy' , 'bed' , 'cleaning product', 'medicine' , 'crate' ]
 
 customers_first_names=[]
 customers_last_names=[]
@@ -265,10 +266,7 @@ def insert_suppliers(SupplierName):
     return SupplierID
 
 def insert_products(ProductName,price,inventory,categoryId,supplierid):
-
-    
-
-    sql = """INSERT INTO Products(ProductName, price , inventory, categoryId, supplierId)
+    sql = """INSERT INTO products(productName, price , inventory, categoryId, supplierId)
             VALUES(%s, %s, %s, %s, %s) RETURNING ProductId;"""
     conn = None
     ProductId = None
@@ -364,9 +362,7 @@ if __name__ == '__main__':
     #     ('Electronics',),
     #     ('Clothing',),
     #     ('Pet',),
-    #     ('Holiday',),
-    #     ('Sales',),
-    #    ])
+    #     ])
 
 
     #generates 100 fake employees
@@ -425,7 +421,7 @@ if __name__ == '__main__':
         # print ("The order is: ", f'{cid} {yr} {mo} {day} {orderDate} {carrierid} {trackingNo}\n')
         # print("#"*50)
         # print(" ")
-
+ 
 
     ##generates fake tickets:
     print("The Tickets are:","\n")
@@ -492,16 +488,24 @@ if __name__ == '__main__':
         suppliers = random.choice(randomCompanies)
 
 
-        #insert_suppliers(suppliers)
+        insert_suppliers(suppliers)
         print(f'{suppliers}\n')
         print("#"*50)
         print(" ")
     
-    # inserts clothing item
-    for x in range (2):
+    #inserts clothing item
+    for x in range (0):
         clothingname = f'{random.choice(clothingcolor)} {random.choice(clothingitem)}'
         print(clothingname)
         price = random.randint(10,40)
-        inventory = random.randint(1,99)
-        clothingsupplier = random.randint(0,99)
-        insert_products(clothingname,price,inventory,3, clothingsupplier)
+        inventory = random.randint(1,20)
+        supplier = random.randint(1,100)
+        insert_products(clothingname,price,inventory,4,supplier)
+
+    for x in range (5):
+        petname = f'{random.choice(pettype)} {random.choice(petitem)}'
+        price = random.randint(1,50)
+        inventory = random.randint(1,20)
+        supplier= random.randint(1,100)
+        insert_products(petname,price,inventory,5,supplier)
+    
