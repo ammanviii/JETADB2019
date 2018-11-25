@@ -23,12 +23,14 @@ customer_id_email={}
 
 fake_companies=[]
 fake_books=[]
+fake_albums=[]
 
 filename1='firstNames.txt'
 filename2='lastNames.txt'
 filename3='fakePasswords.txt'
 filename4='fakeCompanies.txt'
 filename5='books.txt'
+filename6='music.txt'
 
 with open (filename1) as fin:
     for line in fin:
@@ -50,6 +52,10 @@ with open (filename4) as fin:
 with open (filename5) as fin:
     for line in fin:
         fake_books.append(line.strip())
+
+with open (filename6) as fin:
+    for line in fin:
+        fake_albums.append(line.strip())
 
 
 
@@ -523,4 +529,18 @@ if __name__ == '__main__':
         inventory = random.randint(1,99)
         bookSupplier = random.randint(0,99)
 
-        insert_products(books,price,inventory,1,bookSupplier)
+      #  insert_products(books,price,inventory,1,bookSupplier)
+
+
+        #generates 20 fake albums
+    # UNCOMMENT TO INSERT AND CHANGE range to range(100)
+    print("The albums are:","\n")
+    for x in range(20):
+        randomAlbums = random.sample(fake_albums, k=20)
+        albums = random.choice(randomAlbums)
+
+        price = random.randint(10,25)
+        inventory = random.randint(1,99)
+        albumSupplier = random.randint(0,99)
+
+        insert_products(albums,price,inventory,2,albumSupplier)
