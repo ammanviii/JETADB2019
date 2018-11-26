@@ -500,8 +500,7 @@ if __name__ == '__main__':
         print(" ")
 
 
-
- #generates 20 fake books
+    #generates 20 fake books
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
     print("The Books are:","\n")
     for x in range(0):
@@ -512,11 +511,14 @@ if __name__ == '__main__':
         inventory = random.randint(1,99)
         bookSupplier = random.randint(0,99)
         insert_products(books,price,inventory,1,bookSupplier)
+        print(f'{books} {price} {inventory} {1} {bookSupplier}\n')
+        print("#"*50)
+        print(" ")
 
 
         #generates 20 fake albums
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
-    print("The albums are:","\n")
+    print("The music albums are:","\n")
     for x in range(0):
         randomAlbums = random.sample(fake_albums, k=20)
         albums = random.choice(randomAlbums)
@@ -526,27 +528,39 @@ if __name__ == '__main__':
         albumSupplier = random.randint(0,99)
 
         insert_products(albums,price,inventory,2,albumSupplier)
+        print(f'{albums} {price} {inventory} {2} {albumSupplier}\n')
+        print("#"*50)
+        print(" ")
         
         
-            #inserts clothing item
-    for x in range (0):
+    #inserts clothing item
+    print("The clothings are:","\n")
+    for x in range (5):
         clothingname = f'{random.choice(clothingcolor)} {random.choice(clothingitem)}'
         print(clothingname)
         price = random.randint(10,40)
         inventory = random.randint(1,20)
         supplier = random.randint(1,100)
         insert_products(clothingname,price,inventory,4,supplier)
+        print(f'{clothingname} {price} {inventory} {4} {supplier}\n')
+        print("#"*50)
+        print(" ")
 
-    for x in range (0):
+    for x in range (5):
         petname = f'{random.choice(pettype)} {random.choice(petitem)}'
         price = random.randint(1,50)
         inventory = random.randint(1,20)
         supplier= random.randint(1,100)
         insert_products(petname,price,inventory,5,supplier)
+        print(f'{petname} {price} {inventory} {5} {supplier}\n')
+        print("#"*50)
+        print(" ")
+
     #  # inserts electronics item, set categoryID as 3
     # print(randomElectronics,"\n")
+    print("The Electronics are:","\n")
     randomElectronics = random.sample(fake_electronics, k=33)
-    for x in range (1):
+    for x in range (0):
         electronicsName = randomElectronics[x]
         price = random.randint(100,2000)
         inventory = random.randint(1,99)
@@ -556,4 +570,3 @@ if __name__ == '__main__':
         print(f'{electronicsName} {price} {inventory} {SupplierID}\n')
         print("#"*50)
         print(" ")
-        
