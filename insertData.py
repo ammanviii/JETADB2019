@@ -27,6 +27,9 @@ fake_Passwords=[]
 #This is a dictionary to store each email with it's associated customerID
 customer_id_email={}
 
+product_id_price={}
+orderdetails_oid = random.sample(list(range(1,101)), k=100)
+
 fake_companies=[]
 fake_books=[]
 fake_albums=[]
@@ -366,6 +369,61 @@ def insert_products(ProductName,price,inventory,categoryId,supplierid):
             conn.close()
     return ProductId
 
+def get_price():
+    # """ query data from the customers table """
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute("SELECT productid, price FROM Products ORDER BY productid")
+        print("The number of Products: ", cur.rowcount,"\n")
+        row = cur.fetchone()
+ 
+        while row is not None:
+            # print("id: ", row[0])
+            # print("email: ", row[0])
+            product_id_price[row[0]]=row[1]
+            row = cur.fetchone()
+ 
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+
+
+def insert_orderDetails(OrderId, ProductId, Quantity, TotalPrice):
+    """ insert a new vendor into the vendors table """
+    sql = """INSERT INTO orderdetails(OrderId, ProductId, Quantity, TotalPrice)
+            VALUES(%s, %s, %s, %s) RETURNING DetailId;"""
+    conn = None
+    DetailId = None
+    try:
+        # read database configuration
+        params = config()
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(**params)
+        # create a new cursor
+        cur = conn.cursor()
+        # execute the INSERT statement
+        cur.execute(sql, (OrderId,ProductId,Quantity,TotalPrice))
+        # get the generated id back
+        DetailId = cur.fetchone()[0]
+        print("The DetailId is: "+f'{DetailId}')
+        print(" ")
+        # commit the changes to the database
+        conn.commit()
+        # close communication with the database
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+ 
+    return DetailId
 
 
 
@@ -434,7 +492,12 @@ if __name__ == '__main__':
         cid = random.randint(1,100)
         yr = random.randint(2016,2018)
         mo = random.randint(1,12)
-        day = random.randint(1,28)
+        if mo == 2:
+            day = random.randint(1,28)
+        elif mo==4 or mo==6 or mo==9 or mo==11:
+            day = random.randint(1,30)
+        else:
+            day = random.randint(1,31)
         orderDate = f'{str(yr)}-{str(mo)}-{str(day)}'
         carrierid = random.randint(1,4)
         trackingNo = random.randint(10000000,99999999)
@@ -570,3 +633,4 @@ if __name__ == '__main__':
         print(f'{electronicsName} {price} {inventory} {SupplierID}\n')
         print("#"*50)
         print(" ")
+
