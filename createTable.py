@@ -61,7 +61,7 @@ def create_tables():
         """ CREATE TABLE Products (
                 ProductId SERIAL PRIMARY KEY,
                 ProductName VARCHAR(255) NOT NULL,
-                Price INT NOT NULL,
+                Price DECIMAL NOT NULL,
                 Inventory INT NOT NULL,
                 CategoryId INT NOT NULL,
                 SupplierId INT NOT NULL,
@@ -86,7 +86,7 @@ def create_tables():
                 OrderId INT NOT NULL,
                 ProductId INT NOT NULL,
                 Quantity INT NOT NULL,
-                TotalPrice INT NOT NULL,
+                TotalPrice DECIMAL NOT NULL,
                 FOREIGN KEY(OrderId) REFERENCES Orders(OrderId),
                 FOREIGN KEY(ProductId) REFERENCES Products(ProductId)
             )

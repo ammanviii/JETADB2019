@@ -425,45 +425,38 @@ def insert_orderDetails(OrderId, ProductId, Quantity, TotalPrice):
  
     return DetailId
 
+def initiate_carrier():
+    fill_carrierslist([
+       ('USPS',),
+       ('UPS',),
+       ('Fedex',),
+        ('DHL',),
+      ])
 
+def initiate_categories():
+    fill_categorieslist([
+       ('Books',),
+       ('Music',),
+       ('Electronics',),
+        ('Clothing',),
+        ('Pet',),
+       ])
 
-if __name__ == '__main__':
+def generate_employees(n):
     
-    #fill_carrierslist([
-     #   ('USPS',),
-      #  ('UPS',),
-       # ('Fedex',),
-        #('DHL',),
-      #])
-
-    #fill_categorieslist([
-     #   ('Books',),
-      #  ('Music',),
-       # ('Electronics',),
-        #('Clothing',),
-        #('Pet',),
-       #])
-
-
-    #generates 100 fake employees
-    # UNCOMMENT TO INSERT AND CHANGE range to range(100)
-
     print("The Employees are:","\n")
-    for x in range(0):
+    for x in range(n):
     
         first_employee = random.choice(employees_first_names)
         last_employee = random.choice(employees_last_names)
-       # insert_employee(first_employee, first_employee)
-        # print(f'{first_employee} {last_employee}\n')
-        # print("#"*50)
-        # print(" ")
+        insert_employee(first_employee, first_employee)
+        print(f'{first_employee} {last_employee}\n')
+        print("#"*50)
+        print(" ")
 
-
-    #generates 100 fake customers
-    # UNCOMMENT TO INSERT AND CHANGE range to range(100)
-
+def generate_customers(n):
     print("The Customers are:","\n")
-    for x in range(0):
+    for x in range(n):
 
         first_customer = random.choice(customers_first_names)
         last_customer = random.choice(customers_last_names)
@@ -479,16 +472,12 @@ if __name__ == '__main__':
         state = random.choice(states)
         zip_string = f'{random.randint(10000, 99999)}'
         address = f'{street_num} {street} St.'
-        
-        #insert_customers(first_customer, last_customer, phone_string, email, address, city, state, zip_string)
+        insert_customers(first_customer, last_customer, phone_string, email, address, city, state, zip_string)
         print(f'{first_customer}\n{last_customer}\n{phone_string}\n{email}\n{address}\n{city}\n{state}\n{zip_string}\n')
 
-        # print("#"*50)
-        # print(" ")
-
-     ##generates fake Orders:
+def generate_orders(n):
     print("The Orders are","\n")
-    for x in range(0):
+    for x in range(n):
         cid = random.randint(1,100)
         yr = random.randint(2016,2018)
         mo = random.randint(1,12)
@@ -502,19 +491,18 @@ if __name__ == '__main__':
         carrierid = random.randint(1,4)
         trackingNo = random.randint(10000000,99999999)
 
-        #insert_orders(cid,orderDate,trackingNo, carrierid)
-        # print ("The order is: ", f'{cid} {yr} {mo} {day} {orderDate} {carrierid} {trackingNo}\n')
-        # print("#"*50)
-        # print(" ")
+        insert_orders(cid,orderDate,trackingNo, carrierid)
+        print ("The order is: ", f'{cid} {yr} {mo} {day} {orderDate} {carrierid} {trackingNo}\n')
+        print("#"*50)
+        print(" ")
 
-
-    ##generates fake tickets:
+def generate_tickets(n):
     print("The Tickets are:","\n")
     print(" ")
     
     
     ##generates fake supportTickets##
-    for x in range(0):
+    for x in range(n):
         cid = random.randint(1,100)
         oid = random.randint(1,100)
         eid = random.randint(1,100)
@@ -528,18 +516,16 @@ if __name__ == '__main__':
             day = random.randint(1,31)
         ticketdate = f'{str(yr)}-{str(mo)}-{str(day)}'
         supportMessage = f'I have {random.choice(ticketBank1)} about {random.choice(ticketBank2)}'
-        # print(supportMessage)
-        #insert_tickets(cid,supportMessage,oid,eid,ticketdate)
+        print(supportMessage)
+        insert_tickets(cid,supportMessage,oid,eid,ticketdate)
         print(ticketdate)
-    
-    
-    ##generates fake accounts:
-    #We run get_email() so we can get the emails
+
+def generate_accounts(n):
     get_email()
     print(accounts_cid, "\n")
     print("The Accounts are:\n")
 
-    for x in range(0): 
+    for x in range(n): 
         cid = accounts_cid[x]
         email = customer_id_email.get(cid)
         password = random.choice(fake_Passwords) 
@@ -547,32 +533,26 @@ if __name__ == '__main__':
         print(f'{cid} {password} {email}\n')
         print("#"*50)
         print(" ")
-    
 
-     #generates 100 fake companies
-    # UNCOMMENT TO INSERT AND CHANGE range to range(100)
+def generate_suppliers(n):
     print("The Companies are:","\n")
-    for x in range(0):
+    for x in range(n):
         randomCompanies = random.sample(fake_companies, k=100)
         suppliers = random.choice(randomCompanies)
-
-
-        #insert_suppliers(suppliers)
+        insert_suppliers(suppliers)
         print(f'{suppliers}\n')
         print("#"*50)
         print(" ")
 
-
-    #generates 20 fake books
-    # UNCOMMENT TO INSERT AND CHANGE range to range(100)
+def generate_products():
     print("The Books are:","\n")
-    for x in range(0):
+    for x in range(20):
         randomBooks = random.sample(fake_books, k=20)
         books = random.choice(randomBooks)
 
-        price = random.randint(5,20)
+        price = round(random.uniform(2,25),2)
         inventory = random.randint(1,99)
-        bookSupplier = random.randint(0,99)
+        bookSupplier = random.randint(1,100)
         insert_products(books,price,inventory,1,bookSupplier)
         print(f'{books} {price} {inventory} {1} {bookSupplier}\n')
         print("#"*50)
@@ -582,13 +562,13 @@ if __name__ == '__main__':
         #generates 20 fake albums
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
     print("The music albums are:","\n")
-    for x in range(0):
+    for x in range(20):
         randomAlbums = random.sample(fake_albums, k=20)
         albums = random.choice(randomAlbums)
 
-        price = random.randint(10,25)
+        price = round(random.uniform(2,30),2)
         inventory = random.randint(1,99)
-        albumSupplier = random.randint(0,99)
+        albumSupplier = random.randint(1,100)
 
         insert_products(albums,price,inventory,2,albumSupplier)
         print(f'{albums} {price} {inventory} {2} {albumSupplier}\n')
@@ -598,10 +578,10 @@ if __name__ == '__main__':
         
     #inserts clothing item
     print("The clothings are:","\n")
-    for x in range (0):
+    for x in range (20):
         clothingname = f'{random.choice(clothingcolor)} {random.choice(clothingitem)}'
         print(clothingname)
-        price = random.randint(10,40)
+        price = round(random.uniform(1,40),2)
         inventory = random.randint(1,20)
         supplier = random.randint(1,100)
         insert_products(clothingname,price,inventory,4,supplier)
@@ -609,9 +589,9 @@ if __name__ == '__main__':
         print("#"*50)
         print(" ")
 
-    for x in range (0):
+    for x in range (20):
         petname = f'{random.choice(pettype)} {random.choice(petitem)}'
-        price = random.randint(1,50)
+        price = round(random.uniform(1,40),2)
         inventory = random.randint(1,20)
         supplier= random.randint(1,100)
         insert_products(petname,price,inventory,5,supplier)
@@ -623,32 +603,57 @@ if __name__ == '__main__':
     # print(randomElectronics,"\n")
     print("The Electronics are:","\n")
     randomElectronics = random.sample(fake_electronics, k=33)
-    for x in range (0):
+    for x in range (20):
         electronicsName = randomElectronics[x]
-        price = random.randint(100,2000)
+        price= round(random.uniform(50,2000),2)
         inventory = random.randint(1,99)
-        SupplierID = random.randint(0,99)
+        SupplierID = random.randint(1,100)
         insert_products(electronicsName,price,inventory,3,SupplierID)
         print(x,"\n")
         print(f'{electronicsName} {price} {inventory} {SupplierID}\n')
         print("#"*50)
         print(" ")
 
+# generate_details():
+
+if __name__ == '__main__':
+    
+    # initiate_carrier()
+    
+    # initiate_categories()
+    
+    # generate_employees(100)
+    
+    # generate_customers(100)
+    
+    # generate_orders(100)
+    
+    # generate_tickets(10)
+    
+    # generate_accounts(100)
+    
+    # generate_suppliers(100)
+    
+    # generate_products()
+    
+
      ##generates fake Orderdetails:
     get_price()
     print("The Orderdetails are","\n")
-    for x in range(0):
+    print(product_id_price,"\n")
+    for x in range(5):
         # NEED TO RUN BOTH orderid seperately
         # orderid = random.choice(orderdetails_oid)
         orderid = orderdetails_oid[x]
-        # orderid = random.randint(1,100)
+      
 
         productid = random.randint(1,50)
         price = product_id_price.get(productid)
+        print(price,"\n")
         quantity = random.randint(1,5)
         totalprice = price * quantity
 
-        # insert_orderDetails(orderid,productid,quantity,totalprice)
+        insert_orderDetails(orderid,productid,quantity,totalprice)
         print ("The order detail is: ", f'{orderid} {productid} {price} {quantity} {totalprice}\n')
         print("#"*50)
         print(" ")
