@@ -31,7 +31,7 @@ fake_companies=[]
 fake_books=[]
 fake_albums=[]
 fake_electronics=[]
-# randomElectronics = random.sample(fake_electronics, k=33)
+
 
 
 filename1='firstNames.txt'
@@ -480,11 +480,10 @@ if __name__ == '__main__':
         cid = accounts_cid[x]
         email = customer_id_email.get(cid)
         password = random.choice(fake_Passwords) 
-
-       # insert_accounts(email,password,cid)
-        # print(f'{cid} {password} {email}\n')
-        # print("#"*50)
-        # print(" ")
+        insert_accounts(email,password,cid)
+        print(f'{cid} {password} {email}\n')
+        print("#"*50)
+        print(" ")
     
 
      #generates 100 fake companies
@@ -505,7 +504,7 @@ if __name__ == '__main__':
  #generates 20 fake books
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
     print("The Books are:","\n")
-    for x in range(10):
+    for x in range(0):
         randomBooks = random.sample(fake_books, k=20)
         books = random.choice(randomBooks)
 
@@ -546,15 +545,15 @@ if __name__ == '__main__':
         insert_products(petname,price,inventory,5,supplier)
     #  # inserts electronics item, set categoryID as 3
     # print(randomElectronics,"\n")
-    
-    # for x in range (0):
-    #     # electronicsName = randomElectronics[x]
-    #     price = random.randint(100,2000)
-    #     inventory = random.randint(1,99)
-    #     SupplierID = random.randint(0,99)
-    #     insert_products(electronicsName,price,inventory,3,SupplierID)
-    #     print(x,"\n")
-    #     print(f'{electronicsName} {price} {inventory} {SupplierID}\n')
-    #     print("#"*50)
-    #     print(" ")
+    randomElectronics = random.sample(fake_electronics, k=33)
+    for x in range (1):
+        electronicsName = randomElectronics[x]
+        price = random.randint(100,2000)
+        inventory = random.randint(1,99)
+        SupplierID = random.randint(0,99)
+        insert_products(electronicsName,price,inventory,3,SupplierID)
+        print(x,"\n")
+        print(f'{electronicsName} {price} {inventory} {SupplierID}\n')
+        print("#"*50)
+        print(" ")
         
