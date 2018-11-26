@@ -637,7 +637,7 @@ if __name__ == '__main__':
      ##generates fake Orderdetails:
     get_price()
     print("The Orderdetails are","\n")
-    for x in range(100):
+    for x in range(0):
         # NEED TO RUN BOTH orderid seperately
         # orderid = random.choice(orderdetails_oid)
         orderid = orderdetails_oid[x]
