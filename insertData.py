@@ -31,7 +31,7 @@ fake_companies=[]
 fake_books=[]
 fake_albums=[]
 fake_electronics=[]
-randomElectronics = random.sample(fake_electronics, k=33)
+# randomElectronics = random.sample(fake_electronics, k=33)
 
 
 filename1='firstNames.txt'
@@ -289,36 +289,6 @@ def insert_suppliers(SupplierName):
     return SupplierID
 
 
-def insert_orders(cid, orderDate, trackingNo, carrierid):
-    
-    sql = """INSERT INTO Orders(CustomerId, OrderDate , TrackingNo, CarrierId)
-            VALUES(%s, %s, %s, %s) RETURNING OrderId;"""
-    conn = None
-    oid = None
-    try:
-        # read database configuration
-        params = config()
-        # connect to the PostgreSQL database
-        conn = psycopg2.connect(**params)
-        # create a new cursor
-        cur = conn.cursor()
-        # execute the INSERT statement
-        cur.execute(sql, (cid, orderDate, trackingNo, carrierid))
-        # get the generated id back
-        oid = cur.fetchone()[0]
-        print("The OrderId is: "+f'{oid}')
-        print(" ")
-        # commit the changes to the database
-        conn.commit()
-        # close communication with the database
-        cur.close()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-    finally:
-        if conn is not None:
-            conn.close()
- 
-    return oid
 
 def fill_carrierslist(carrierList):
     """ insert multiple carriers into the carriers table  """
@@ -421,7 +391,7 @@ if __name__ == '__main__':
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
 
     print("The Employees are:","\n")
-    for x in range(100):
+    for x in range(0):
     
         first_employee = random.choice(employees_first_names)
         last_employee = random.choice(employees_last_names)
@@ -435,7 +405,7 @@ if __name__ == '__main__':
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
 
     print("The Customers are:","\n")
-    for x in range(100):
+    for x in range(0):
 
         first_customer = random.choice(customers_first_names)
         last_customer = random.choice(customers_last_names)
@@ -481,7 +451,7 @@ if __name__ == '__main__':
     
     
     ##generates fake supportTickets##
-    for x in range(100):
+    for x in range(0):
         cid = random.randint(1,100)
         oid = random.randint(1,100)
         eid = random.randint(1,100)
@@ -506,7 +476,7 @@ if __name__ == '__main__':
     print(accounts_cid, "\n")
     print("The Accounts are:\n")
 
-    for x in range(100): 
+    for x in range(0): 
         cid = accounts_cid[x]
         email = customer_id_email.get(cid)
         password = random.choice(fake_Passwords) 
@@ -520,7 +490,7 @@ if __name__ == '__main__':
      #generates 100 fake companies
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
     print("The Companies are:","\n")
-    for x in range(100):
+    for x in range(0):
         randomCompanies = random.sample(fake_companies, k=100)
         suppliers = random.choice(randomCompanies)
 
@@ -535,21 +505,20 @@ if __name__ == '__main__':
  #generates 20 fake books
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
     print("The Books are:","\n")
-    for x in range(20):
+    for x in range(10):
         randomBooks = random.sample(fake_books, k=20)
         books = random.choice(randomBooks)
 
         price = random.randint(5,20)
         inventory = random.randint(1,99)
         bookSupplier = random.randint(0,99)
-
-      #  insert_products(books,price,inventory,1,bookSupplier)
+        insert_products(books,price,inventory,1,bookSupplier)
 
 
         #generates 20 fake albums
     # UNCOMMENT TO INSERT AND CHANGE range to range(100)
     print("The albums are:","\n")
-    for x in range(20):
+    for x in range(0):
         randomAlbums = random.sample(fake_albums, k=20)
         albums = random.choice(randomAlbums)
 
@@ -569,23 +538,23 @@ if __name__ == '__main__':
         supplier = random.randint(1,100)
         insert_products(clothingname,price,inventory,4,supplier)
 
-    for x in range (5):
+    for x in range (0):
         petname = f'{random.choice(pettype)} {random.choice(petitem)}'
         price = random.randint(1,50)
         inventory = random.randint(1,20)
         supplier= random.randint(1,100)
         insert_products(petname,price,inventory,5,supplier)
     #  # inserts electronics item, set categoryID as 3
-    print(randomElectronics,"\n")
+    # print(randomElectronics,"\n")
     
-    for x in range (0):
-        electronicsName = randomElectronics[x]
-        price = random.randint(100,2000)
-        inventory = random.randint(1,99)
-        SupplierID = random.randint(0,99)
-        insert_products(electronicsName,price,inventory,3,SupplierID)
-        print(x,"\n")
-        print(f'{electronicsName} {price} {inventory} {SupplierID}\n')
-        print("#"*50)
-        print(" ")
+    # for x in range (0):
+    #     # electronicsName = randomElectronics[x]
+    #     price = random.randint(100,2000)
+    #     inventory = random.randint(1,99)
+    #     SupplierID = random.randint(0,99)
+    #     insert_products(electronicsName,price,inventory,3,SupplierID)
+    #     print(x,"\n")
+    #     print(f'{electronicsName} {price} {inventory} {SupplierID}\n')
+    #     print("#"*50)
+    #     print(" ")
         
