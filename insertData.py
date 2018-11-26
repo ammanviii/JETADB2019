@@ -535,7 +535,7 @@ if __name__ == '__main__':
         
     #inserts clothing item
     print("The clothings are:","\n")
-    for x in range (5):
+    for x in range (0):
         clothingname = f'{random.choice(clothingcolor)} {random.choice(clothingitem)}'
         print(clothingname)
         price = random.randint(10,40)
@@ -546,7 +546,7 @@ if __name__ == '__main__':
         print("#"*50)
         print(" ")
 
-    for x in range (5):
+    for x in range (0):
         petname = f'{random.choice(pettype)} {random.choice(petitem)}'
         price = random.randint(1,50)
         inventory = random.randint(1,20)
