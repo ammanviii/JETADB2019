@@ -638,12 +638,13 @@ if __name__ == '__main__':
     get_price()
     print("The Orderdetails are","\n")
     for x in range(100):
+        # NEED TO RUN BOTH orderid seperately
         # orderid = random.choice(orderdetails_oid)
         orderid = orderdetails_oid[x]
         # orderid = random.randint(1,100)
+
         productid = random.randint(1,50)
         price = product_id_price.get(productid)
-        # print(product_id_price.get(productid),"\n")
         quantity = random.randint(1,5)
         totalprice = price * quantity
 
@@ -651,6 +652,3 @@ if __name__ == '__main__':
         print ("The order detail is: ", f'{orderid} {productid} {price} {quantity} {totalprice}\n')
         print("#"*50)
         print(" ")
-
-    print(orderdetails_oid,"\n")
-    # print(orderdetails_oid[3])   
