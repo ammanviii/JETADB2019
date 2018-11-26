@@ -634,3 +634,23 @@ if __name__ == '__main__':
         print("#"*50)
         print(" ")
 
+     ##generates fake Orderdetails:
+    get_price()
+    print("The Orderdetails are","\n")
+    for x in range(100):
+        # orderid = random.choice(orderdetails_oid)
+        orderid = orderdetails_oid[x]
+        # orderid = random.randint(1,100)
+        productid = random.randint(1,50)
+        price = product_id_price.get(productid)
+        # print(product_id_price.get(productid),"\n")
+        quantity = random.randint(1,5)
+        totalprice = price * quantity
+
+        # insert_orderDetails(orderid,productid,quantity,totalprice)
+        print ("The order detail is: ", f'{orderid} {productid} {price} {quantity} {totalprice}\n')
+        print("#"*50)
+        print(" ")
+
+    print(orderdetails_oid,"\n")
+    # print(orderdetails_oid[3])   
