@@ -30,6 +30,8 @@ customer_id_email={}
 product_id_price={}
 orderdetails_oid = random.sample(list(range(1,101)), k=100)
 
+employee_ticket_id=[]
+
 fake_companies=[]
 fake_books=[]
 fake_albums=[]
@@ -425,6 +427,61 @@ def insert_orderDetails(OrderId, ProductId, Quantity, TotalPrice):
  
     return DetailId
 
+def insert_employeeHandles(TicketId,EmployeeId):
+    """ insert a new vendor into the vendors table """
+    sql = """INSERT INTO EmployeeHandles(TicketId,EmployeeId)
+            VALUES(%s, %s) RETURNING TicketId;"""
+    conn = None
+    TicketId = None
+    try:
+        # read database configuration
+        params = config()
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(**params)
+        # create a new cursor
+        cur = conn.cursor()
+        # execute the INSERT statement
+        cur.execute(sql, (EmployeeId,TicketId))
+        # get the generated id back
+        TicketId = cur.fetchone()[0]
+        print("The TicketId is: "+f'{TicketId}')
+        print(" ")
+        # commit the changes to the database
+        conn.commit()
+        # close communication with the database
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+ 
+    return TicketId
+
+def get_employeeTickets():
+    # """ query data from the customers table """
+    conn = None
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute("SELECT ticketid, Employees.employeeid FROM employees, supporttickets WHERE Employees.employeeid=Supporttickets.employeeid")
+        print("The number of Employee Handles: ", cur.rowcount,"\n")
+        row = cur.fetchone()
+ 
+        while row is not None:
+            # print("id: ", row[0])
+            # print("email: ", row[0])
+            employee_ticket_id.append([ row[0], row[1] ])
+            row = cur.fetchone()
+ 
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+
 def initiate_carrier():
     fill_carrierslist([
        ('USPS',),
@@ -638,10 +695,10 @@ if __name__ == '__main__':
     
 
      ##generates fake Orderdetails:
-    get_price()
-    print("The Orderdetails are","\n")
-    print(product_id_price,"\n")
-    for x in range(5):
+    # get_price()
+    # print("The Orderdetails are","\n")
+    # print(product_id_price,"\n")
+    for x in range(0):
         # NEED TO RUN BOTH orderid seperately
         # orderid = random.choice(orderdetails_oid)
         orderid = orderdetails_oid[x]
@@ -653,7 +710,23 @@ if __name__ == '__main__':
         quantity = random.randint(1,5)
         totalprice = price * quantity
 
-        insert_orderDetails(orderid,productid,quantity,totalprice)
+        # insert_orderDetails(orderid,productid,quantity,totalprice)
         print ("The order detail is: ", f'{orderid} {productid} {price} {quantity} {totalprice}\n')
         print("#"*50)
         print(" ")
+    
+    
+    print("The Employees Handles are:","\n")
+    get_employeeTickets()
+    for x in range(0):
+        EmployeeId=employee_ticket_id[x][0]
+        TicketId=employee_ticket_id[x][1]
+
+        insert_employeeHandles(TicketId,EmployeeId)
+        print(f'{EmployeeId} {TicketId}\n')
+        print("#"*50)
+        print(" ")
+
+
+    # print("The Employee Handles will look like: ",employee_ticket_id,"\n")
+    # print(employee_ticket_id[0][1])
