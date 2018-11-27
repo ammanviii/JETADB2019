@@ -427,12 +427,12 @@ def insert_orderDetails(OrderId, ProductId, Quantity, TotalPrice):
  
     return DetailId
 
-def insert_employeeHandles(TicketId,EmployeeId):
+def insert_employeeHandles(TicketId ,EmployeeId):
     """ insert a new vendor into the vendors table """
-    sql = """INSERT INTO EmployeeHandles(TicketId,EmployeeId)
-            VALUES(%s, %s) RETURNING TicketId;"""
+    sql = """INSERT INTO EmployeeHandles(TicketId, EmployeeId)
+            VALUES(%s, %s);"""
     conn = None
-    TicketId = None
+    # TicketId = None
     try:
         # read database configuration
         params = config()
@@ -441,11 +441,11 @@ def insert_employeeHandles(TicketId,EmployeeId):
         # create a new cursor
         cur = conn.cursor()
         # execute the INSERT statement
-        cur.execute(sql, (EmployeeId,TicketId))
+        cur.execute(sql, (TicketId,EmployeeId))
         # get the generated id back
-        TicketId = cur.fetchone()[0]
-        print("The TicketId is: "+f'{TicketId}')
-        print(" ")
+        # TicketId = cur.fetchone()[0]
+        # print("The TicketId is: "+f'{TicketId}')
+        # print(" ")
         # commit the changes to the database
         conn.commit()
         # close communication with the database
@@ -456,7 +456,7 @@ def insert_employeeHandles(TicketId,EmployeeId):
         if conn is not None:
             conn.close()
  
-    return TicketId
+    # return TicketId
 
 def get_employeeTickets():
     # """ query data from the customers table """
@@ -673,6 +673,19 @@ def generate_products():
 
 # generate_details():
 
+def generate_employeeHandles():
+    get_employeeTickets()
+    print("The Employee Handles will look like: ",employee_ticket_id,"\n")
+    print("The Employees Handles are:","\n")
+    for x in range(100):
+        ticketid = employee_ticket_id[x][0]
+        employeeid = employee_ticket_id[x][1]
+
+        insert_employeeHandles(ticketid, employeeid)
+        print(f'{ticketid} {employeeid}\n')
+        print("#"*50)
+        print(" ")
+
 if __name__ == '__main__':
     
     # initiate_carrier()
@@ -692,6 +705,8 @@ if __name__ == '__main__':
     # generate_suppliers(100)
     
     # generate_products()
+
+    # generate_employeeHandles()
     
 
      ##generates fake Orderdetails:
@@ -714,19 +729,8 @@ if __name__ == '__main__':
         print ("The order detail is: ", f'{orderid} {productid} {price} {quantity} {totalprice}\n')
         print("#"*50)
         print(" ")
-    
-    
-    print("The Employees Handles are:","\n")
-    get_employeeTickets()
-    for x in range(0):
-        EmployeeId=employee_ticket_id[x][0]
-        TicketId=employee_ticket_id[x][1]
-
-        insert_employeeHandles(TicketId,EmployeeId)
-        print(f'{EmployeeId} {TicketId}\n')
-        print("#"*50)
-        print(" ")
 
 
+    # get_employeeTickets()
     # print("The Employee Handles will look like: ",employee_ticket_id,"\n")
     # print(employee_ticket_id[0][1])
