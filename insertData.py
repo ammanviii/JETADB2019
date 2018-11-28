@@ -506,7 +506,7 @@ def generate_employees(n):
     
         first_employee = random.choice(employees_first_names)
         last_employee = random.choice(employees_last_names)
-        insert_employee(first_employee, first_employee)
+        insert_employee(first_employee, last_employee)
         print(f'{first_employee} {last_employee}\n')
         print("#"*50)
         print(" ")
