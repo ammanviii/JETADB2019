@@ -710,9 +710,9 @@ if __name__ == '__main__':
     
 
      ##generates fake Orderdetails:
-    # get_price()
-    # print("The Orderdetails are","\n")
-    # print(product_id_price,"\n")
+    get_price()
+    print("The Orderdetails are","\n")
+    print(product_id_price,"\n")
     for x in range(0):
         # NEED TO RUN BOTH orderid seperately
         # orderid = random.choice(orderdetails_oid)
