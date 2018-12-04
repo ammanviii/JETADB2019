@@ -21,14 +21,14 @@ customers_first_names=[]
 customers_last_names=[]
 
 #This list contains random customerID numbers without repetition shhuffled, print to see it
-accounts_cid = random.sample(list(range(1,101)), k=100)
+accounts_cid = random.sample(list(range(1,201)), k=200)
 fake_Passwords=[]
 
 #This is a dictionary to store each email with it's associated customerID
 customer_id_email={}
 
 product_id_price={}
-orderdetails_oid = random.sample(list(range(1,101)), k=100)
+orderdetails_oid = random.sample(list(range(1,201)), k=200)
 
 employee_ticket_id=[]
 
@@ -688,44 +688,44 @@ def generate_employeeHandles():
 
 if __name__ == '__main__':
     
-    # initiate_carrier()
+    initiate_carrier()
     
-    # initiate_categories()
+    initiate_categories()
     
-    # generate_employees(100)
+    generate_employees(100)
     
-    # generate_customers(100)
+    generate_customers(200)
     
-    # generate_orders(100)
+    generate_orders(200)
     
-    # generate_tickets(10)
+    generate_tickets(100)
     
-    # generate_accounts(100)
+    generate_accounts(200)
     
-    # generate_suppliers(100)
+    generate_suppliers(100)
     
-    # generate_products()
+    generate_products()
 
-    # generate_employeeHandles()
+    generate_employeeHandles()
     
 
      ##generates fake Orderdetails:
     get_price()
     print("The Orderdetails are","\n")
     print(product_id_price,"\n")
-    for x in range(0):
+    for x in range(200):
         # NEED TO RUN BOTH orderid seperately
         # orderid = random.choice(orderdetails_oid)
         orderid = orderdetails_oid[x]
       
 
-        productid = random.randint(1,50)
+        productid = random.randint(1,100)
         price = product_id_price.get(productid)
         print(price,"\n")
         quantity = random.randint(1,5)
         totalprice = price * quantity
 
-        # insert_orderDetails(orderid,productid,quantity,totalprice)
+        insert_orderDetails(orderid,productid,quantity,totalprice)
         print ("The order detail is: ", f'{orderid} {productid} {price} {quantity} {totalprice}\n')
         print("#"*50)
         print(" ")
